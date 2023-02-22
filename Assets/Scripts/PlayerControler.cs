@@ -19,7 +19,8 @@ public class PlayerControler : MonoBehaviour
     private float jumpForce;
     [SerializeField]
     private Animator playerAnimator;
-
+    [SerializeField]
+    private GameObject gameOverUi;
 
 
     [SerializeField]
@@ -39,13 +40,13 @@ public class PlayerControler : MonoBehaviour
 
     public void DecreaseHealth()
     {
-        if (health == 1)
-        {
-            ReloadScene();
-            return;
-        }
         health -= 1;
+
         PrintHealth();
+        if (health == 0)
+        {
+            PlayedDied();
+        }
 
     }
     private void PrintHealth()
@@ -63,9 +64,12 @@ public class PlayerControler : MonoBehaviour
     }
 
 
-    public void ReloadScene()
+    public void PlayedDied()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        gameOverUi.SetActive(true);
+        this.enabled = false;
+        playerAnimator.SetFloat("Speed", 0); /*Run idle animation for now later can change to death animation*/
     }
 
     public void IncreaseScore(int additionScore)

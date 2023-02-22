@@ -8,7 +8,7 @@ public class OutOfBound : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerControler>() != null)
         {
-            collision.gameObject.GetComponent<PlayerControler>().ReloadScene();
+            collision.gameObject.GetComponent<PlayerControler>().PlayedDied();
         }
     }
 }
