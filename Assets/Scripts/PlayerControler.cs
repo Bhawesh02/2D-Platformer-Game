@@ -90,7 +90,8 @@ public class PlayerControler : MonoBehaviour
         transform.position = playerPosition;
         if (((verticalInput > 0) || (jumpInput)) && onGround)
         {/*
-            playerRigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);*/
+            playerRigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);*/
+
             playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
         }
     }
