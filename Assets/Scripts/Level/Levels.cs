@@ -1,24 +1,18 @@
-
-
+public enum LevelStatus
+{
+    Locked,
+    Unlocked,
+    Completed
+}
 public static class Levels
 {
-    public static string lobby = "lobby";
-    public static string level1 = "Level1";
-    public static string level2 = "Level2";
-    public static string level3 = "Level3";
-    public static string lastLevel = level3;
+    private static int numOfLevel = 3 ;
+    public static string[] levels = { "lobby","Level1", "Level2", "Level3" };
+    public static string lastLevel = levels[numOfLevel];
 
-    public static string GetSceneName(string name)
+    public static string GetSceneName(int index)
     {
-        switch (name)
-        {
-            case "Lobby": return lobby;
-            case "Level 1": return level1;
-            case "Level 2": return level2;
-            case "Level 3": return level3;
-            default:
-                return "No such level";
-        }
+        return levels[index];
     }
 
 

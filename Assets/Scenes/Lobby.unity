@@ -846,7 +846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c7f2aeb88b291e4e89d9ebb320ca1a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Level 2
+  levelNum: 2
 --- !u!114 &876627632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -929,6 +929,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 876627629}
   m_CullTransparentMesh: 1
+--- !u!1 &954467620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 954467621}
+  - component: {fileID: 954467622}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &954467621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954467620}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 844.13434, y: 453.9773, z: -8.999128}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &954467622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954467620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f812d052bbdf8604fb657f420219dbc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963643546
 GameObject:
   m_ObjectHideFlags: 0
@@ -1104,7 +1148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c7f2aeb88b291e4e89d9ebb320ca1a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Level 3
+  levelNum: 3
 --- !u!114 &1005414792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1575,7 +1619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c7f2aeb88b291e4e89d9ebb320ca1a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Level 1
+  levelNum: 1
 --- !u!114 &1516413160
 MonoBehaviour:
   m_ObjectHideFlags: 0

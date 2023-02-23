@@ -28,7 +28,8 @@ public class LevelSelection : MonoBehaviour
 
     private void ContinueLevel()
     {
-        string sceneName = PlayerPrefs.GetString("Level", Levels.level1);
+        string sceneName = PlayerPrefs.GetString("Reached Level", Levels.levels[1]);
+
 
         SceneManager.LoadScene(sceneName);
 
