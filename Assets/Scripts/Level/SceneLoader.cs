@@ -20,7 +20,7 @@ public class SceneLoader : MonoBehaviour
         button.onClick.AddListener(LoadScene);
     }
 
-    private void LoadScene()
+    public  void LoadScene()
     {
         string sceneName = Levels.GetSceneName(levelNum);
         if (levelNum == 0)

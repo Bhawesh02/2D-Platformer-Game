@@ -1,28 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelEnd : MonoBehaviour
 {
     [SerializeField]
-    private int nextLevelNum;
+    private GameObject levelComplete;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerControler>() == null)
         {
             return;
         }
-        string curLevelName = SceneManager.GetActiveScene().name;
-        if (curLevelName == Levels.lastLevel)
+        string currentLevelName = SceneManager.GetActiveScene().name;
+        levelComplete.SetActive(true);
+        if (currentLevelName == Levels.lastLevel)
         {
-            Debug.Log("Game cvleared!!");
             return;
         }
-        string nextLevelName = Levels.GetSceneName(nextLevelNum);
-        PlayerPrefs.SetString("Reached Level", nextLevelName);
-        PlayerPrefs.SetInt(curLevelName, (int)LevelStatus.Completed);
-        PlayerPrefs.SetInt(nextLevelName, (int)LevelStatus.Unlocked);
-        SceneManager.LoadScene(nextLevelName);
+        int currentLevelIndex = Array.IndexOf(Levels.levels, currentLevelName);
+        int nextLevelIndex = currentLevelIndex + 1;
+        PlayerPrefs.SetInt(Levels.levels[nextLevelIndex], (int)LevelStatus.Unlocked);
+        collision.gameObject.GetComponent<PlayerControler>().enabled = false;
+
     }
 }
