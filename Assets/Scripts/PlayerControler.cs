@@ -68,8 +68,9 @@ public class PlayerControler : MonoBehaviour
     {
 
         gameOverUi.SetActive(true);
-        this.enabled = false;
         playerAnimator.SetFloat("Speed", 0); /*Run idle animation for now later can change to death animation*/
+        AudioManager.Instance.PlaySfxMusic(SoundType.PlayerDeath);
+        this.enabled = false;
     }
 
     public void IncreaseScore(int additionScore)
@@ -85,15 +86,29 @@ public class PlayerControler : MonoBehaviour
 
     private void PlayerMovement(float horizontalInput, float verticalInput, bool jumpInput)
     {
-        Vector3 playerPosition = transform.position;
-        playerPosition.x += (speed * horizontalInput * Time.deltaTime);
-        transform.position = playerPosition;
+        PlayerHoeeizontalMovement(horizontalInput);
+        PlayerJumpMovement(verticalInput, jumpInput);
+    }
+
+    private void PlayerJumpMovement(float verticalInput, bool jumpInput)
+    {
         if (((verticalInput > 0) || (jumpInput)) && onGround)
         {/*
             playerRigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);*/
 
             playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
         }
+    }
+
+    private void PlayerHoeeizontalMovement(float horizontalInput)
+    {
+        if (horizontalInput == 0)
+            return;
+        Vector3 playerPosition = transform.position;
+        playerPosition.x += (speed * horizontalInput * Time.deltaTime);
+        transform.position = playerPosition;
+        if (!AudioManager.Instance.audioSfx.isPlaying && onGround)
+            AudioManager.Instance.PlaySfxMusic(SoundType.PlayerMovement);
     }
 
     private void PlayerAnimation(float horizontalInput, float verticalInput, bool jumpInput)
