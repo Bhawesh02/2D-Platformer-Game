@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static Levels;
 
 [RequireComponent(typeof(Button))]
 public class SceneLoader : MonoBehaviour
@@ -13,7 +12,7 @@ public class SceneLoader : MonoBehaviour
     private Button button;
 
     [SerializeField]
-    private string sceneName;
+    private int levelNum;
 
     private void Awake()
     {
@@ -23,11 +22,19 @@ public class SceneLoader : MonoBehaviour
 
     private void LoadScene()
     {
-        sceneName = Levels.GetSceneName(sceneName);
-        if(sceneName != Levels.GetSceneName("Lobby"))
+        string sceneName = Levels.GetSceneName(levelNum);
+        if (levelNum == 0)
         {
-            PlayerPrefs.SetString("Level", sceneName);
+            SceneManager.LoadScene(sceneName);
+            return;
         }
+        if(LevelManager.GetLevelStatus(sceneName) == LevelStatus.Locked)
+        {
+            Debug.Log("Level: "+sceneName+" is locked");
+            return;
+        }
+        PlayerPrefs.SetString("Reached Level", sceneName);
         SceneManager.LoadScene(sceneName);
+
     }
 }

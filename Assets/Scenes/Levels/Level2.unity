@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c7f2aeb88b291e4e89d9ebb320ca1a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Lobby
+  levelNum: 0
 --- !u!114 &216531738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3243,7 +3243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c47e715a2e14444b2892379aa9ab4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextLevelName: Level 3
+  nextLevelNum: 3
 --- !u!61 &1985811951
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3400,12 +3400,12 @@ PrefabInstance:
     - target: {fileID: 7761410537532868873, guid: 944c32871911126458e5a145596ddca3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.45
+      value: -0.49
       objectReference: {fileID: 0}
     - target: {fileID: 7761410537532868873, guid: 944c32871911126458e5a145596ddca3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.14
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 7761410537532868873, guid: 944c32871911126458e5a145596ddca3,
         type: 3}

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static Levels;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -28,7 +27,8 @@ public class LevelSelection : MonoBehaviour
 
     private void ContinueLevel()
     {
-        string sceneName = PlayerPrefs.GetString("Level", Levels.level1);
+        string sceneName = PlayerPrefs.GetString("Reached Level", Levels.levels[1]);
+
 
         SceneManager.LoadScene(sceneName);
 
