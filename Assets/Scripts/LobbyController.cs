@@ -19,6 +19,7 @@ public class LobbyController : MonoBehaviour
 
     private void QuitGame()
     {
+
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
@@ -27,6 +28,7 @@ public class LobbyController : MonoBehaviour
 
     private void SelectLevel()
     {
+        AudioManager.Instance.PlaySfxMusic(SoundType.ButtonClick);
         continueSelection.SetActive(true);
     }
 }

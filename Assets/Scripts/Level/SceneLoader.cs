@@ -22,6 +22,7 @@ public class SceneLoader : MonoBehaviour
 
     public  void LoadScene()
     {
+        AudioManager.Instance.PlaySfxMusic(SoundType.ButtonClick);
         string sceneName = Levels.GetSceneName(levelNum);
         if (levelNum == 0)
         {
