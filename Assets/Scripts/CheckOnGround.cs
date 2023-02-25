@@ -13,6 +13,11 @@ public class CheckOnGround : MonoBehaviour
         playerController = player.GetComponent<PlayerControler>();
         playerAnimator = player.GetComponent<Animator>();
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (playerController.isFalling)
+            playerAnimator.SetBool("HasLanded",true);
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Platform"))
@@ -28,6 +33,8 @@ public class CheckOnGround : MonoBehaviour
         {
             playerController.onGround = false;
             playerAnimator.SetBool("onGround", false);
+            playerAnimator.SetBool("HasLanded", false);
+
         }
     }
 

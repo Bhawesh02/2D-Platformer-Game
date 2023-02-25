@@ -30,6 +30,7 @@ public class PlayerControler : MonoBehaviour
     private int health = 3;
     private Rigidbody2D playerRigidBody;
     private SpriteRenderer playerSpriteRenderer;
+    public bool isFalling = false;
     private void Awake()
     {
         playerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -61,6 +62,16 @@ public class PlayerControler : MonoBehaviour
         bool jumpInput = Input.GetKey(KeyCode.Space);
         PlayerAnimation(horizontalInput, verticalInput, jumpInput);
         PlayerMovement(horizontalInput, verticalInput, jumpInput);
+        if(playerRigidBody.velocity.y < 0)
+        {
+            isFalling = true;
+            playerAnimator.SetBool("IsFalling", true);
+        }
+        else
+        {
+            isFalling = false;
+            playerAnimator.SetBool("IsFalling", false);
+        }
     }
 
 
@@ -107,6 +118,7 @@ public class PlayerControler : MonoBehaviour
         Vector3 playerPosition = transform.position;
         playerPosition.x += (speed * horizontalInput * Time.deltaTime);
         transform.position = playerPosition;
+        if(AudioManager.Instance!=null)
         if (!AudioManager.Instance.audioSfx.isPlaying && onGround)
             AudioManager.Instance.PlaySfxMusic(SoundType.PlayerMovement);
     }
