@@ -21,7 +21,7 @@ public class PlayerControler : MonoBehaviour
     private Animator playerAnimator;
     [SerializeField]
     private GameObject gameOverUi;
-
+    
 
     [SerializeField]
     private BoxCollider2D playerBoxCollider;
