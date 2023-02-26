@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControler : MonoBehaviour
 {
-    public bool onGround;
+    public bool OnGround;
 
     [SerializeField]
     private TextMeshProUGUI scoreText;
@@ -21,7 +21,7 @@ public class PlayerControler : MonoBehaviour
     private Animator playerAnimator;
     [SerializeField]
     private GameObject gameOverUi;
-    
+
 
     [SerializeField]
     private BoxCollider2D playerBoxCollider;
@@ -30,7 +30,8 @@ public class PlayerControler : MonoBehaviour
     private int health = 3;
     private Rigidbody2D playerRigidBody;
     private SpriteRenderer playerSpriteRenderer;
-    public bool isFalling = false;
+    public bool IsFalling = false;
+    public bool CanDoubleJump = true;
     private void Awake()
     {
         playerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -58,20 +59,10 @@ public class PlayerControler : MonoBehaviour
     void Update()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
-        bool jumpInput = Input.GetKey(KeyCode.Space);
-        PlayerAnimation(horizontalInput, verticalInput, jumpInput);
-        PlayerMovement(horizontalInput, verticalInput, jumpInput);
-        if(playerRigidBody.velocity.y < 0)
-        {
-            isFalling = true;
-            playerAnimator.SetBool("IsFalling", true);
-        }
-        else
-        {
-            isFalling = false;
-            playerAnimator.SetBool("IsFalling", false);
-        }
+        bool jumpInput = (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow));
+        PlayerAnimation(horizontalInput, jumpInput);
+        PlayerMovement(horizontalInput, jumpInput);
+
     }
 
 
@@ -80,6 +71,7 @@ public class PlayerControler : MonoBehaviour
 
         gameOverUi.SetActive(true);
         playerAnimator.SetFloat("Speed", 0); /*Run idle animation for now later can change to death animation*/
+
         AudioManager.Instance.PlaySfxMusic(SoundType.PlayerDeath);
         this.enabled = false;
     }
@@ -95,39 +87,59 @@ public class PlayerControler : MonoBehaviour
         scoreText.text = "Score: " + score;
     }
 
-    private void PlayerMovement(float horizontalInput, float verticalInput, bool jumpInput)
+    private void PlayerMovement(float horizontalInput, bool jumpInput)
     {
-        PlayerHoeeizontalMovement(horizontalInput);
-        PlayerJumpMovement(verticalInput, jumpInput);
+        PlayerHorizontalMovement(horizontalInput);
+        PlayerJumpMovement(jumpInput);
     }
 
-    private void PlayerJumpMovement(float verticalInput, bool jumpInput)
+    private void PlayerJumpMovement(bool jumpInput)
     {
-        if (((verticalInput > 0) || (jumpInput)) && onGround)
-        {/*
-            playerRigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);*/
+        if (!(jumpInput))
+            return;
+        if (OnGround || CanDoubleJump)
+        {
+            if (!OnGround)
+                CanDoubleJump = false;
 
             playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
+
+
         }
     }
 
-    private void PlayerHoeeizontalMovement(float horizontalInput)
+    private void PlayerHorizontalMovement(float horizontalInput)
     {
         if (horizontalInput == 0)
             return;
         Vector3 playerPosition = transform.position;
         playerPosition.x += (speed * horizontalInput * Time.deltaTime);
         transform.position = playerPosition;
-        if(AudioManager.Instance!=null)
-        if (!AudioManager.Instance.audioSfx.isPlaying && onGround)
-            AudioManager.Instance.PlaySfxMusic(SoundType.PlayerMovement);
+        if (AudioManager.Instance != null)
+            if (!AudioManager.Instance.audioSfx.isPlaying && OnGround)
+                AudioManager.Instance.PlaySfxMusic(SoundType.PlayerMovement);
     }
 
-    private void PlayerAnimation(float horizontalInput, float verticalInput, bool jumpInput)
+    private void PlayerAnimation(float horizontalInput, bool jumpInput)
     {
         PlayerHorizontalMovementAnimation(horizontalInput);
-        PlayerJumpAnimation(verticalInput, jumpInput);
+        PlayerJumpAnimation(jumpInput);
         PlayerCrouchAnimation();
+        PlayerFaillingAnimation();
+    }
+
+    private void PlayerFaillingAnimation()
+    {
+        if (playerRigidBody.velocity.y < 0)
+        {
+            IsFalling = true;
+            playerAnimator.SetBool("IsFalling", true);
+        }
+        else
+        {
+            IsFalling = false;
+            playerAnimator.SetBool("IsFalling", false);
+        }
     }
 
     private void PlayerCrouchAnimation()
@@ -154,9 +166,9 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    private void PlayerJumpAnimation(float verticalInput, bool jumpInput)
+    private void PlayerJumpAnimation(bool jumpInput)
     {
-        if (verticalInput > 0 || jumpInput)
+        if (jumpInput)
         {
             playerAnimator.SetBool("Jump", true);
         }

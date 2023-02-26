@@ -15,15 +15,17 @@ public class CheckOnGround : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (playerController.isFalling)
-            playerAnimator.SetBool("HasLanded",true);
+        playerController.CanDoubleJump = true;
+        if (playerController.IsFalling)
+            playerAnimator.SetBool("HasLanded", true);
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Platform"))
         {
-            playerController.onGround = true;
+            playerController.OnGround = true;
             playerAnimator.SetBool("onGround", true);
+
         }
     }
 
@@ -31,10 +33,9 @@ public class CheckOnGround : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Platform"))
         {
-            playerController.onGround = false;
+            playerController.OnGround = false;
             playerAnimator.SetBool("onGround", false);
             playerAnimator.SetBool("HasLanded", false);
-
         }
     }
 
