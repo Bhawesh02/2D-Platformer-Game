@@ -21,7 +21,7 @@ public class PlayerControler : MonoBehaviour
     private Animator playerAnimator;
     [SerializeField]
     private GameObject gameOverUi;
-
+    
 
     [SerializeField]
     private BoxCollider2D playerBoxCollider;
@@ -30,6 +30,7 @@ public class PlayerControler : MonoBehaviour
     private int health = 3;
     private Rigidbody2D playerRigidBody;
     private SpriteRenderer playerSpriteRenderer;
+    public bool isFalling = false;
     private void Awake()
     {
         playerSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -61,6 +62,16 @@ public class PlayerControler : MonoBehaviour
         bool jumpInput = Input.GetKey(KeyCode.Space);
         PlayerAnimation(horizontalInput, verticalInput, jumpInput);
         PlayerMovement(horizontalInput, verticalInput, jumpInput);
+        if(playerRigidBody.velocity.y < 0)
+        {
+            isFalling = true;
+            playerAnimator.SetBool("IsFalling", true);
+        }
+        else
+        {
+            isFalling = false;
+            playerAnimator.SetBool("IsFalling", false);
+        }
     }
 
 
@@ -68,8 +79,9 @@ public class PlayerControler : MonoBehaviour
     {
 
         gameOverUi.SetActive(true);
-        this.enabled = false;
         playerAnimator.SetFloat("Speed", 0); /*Run idle animation for now later can change to death animation*/
+        AudioManager.Instance.PlaySfxMusic(SoundType.PlayerDeath);
+        this.enabled = false;
     }
 
     public void IncreaseScore(int additionScore)
@@ -85,15 +97,30 @@ public class PlayerControler : MonoBehaviour
 
     private void PlayerMovement(float horizontalInput, float verticalInput, bool jumpInput)
     {
-        Vector3 playerPosition = transform.position;
-        playerPosition.x += (speed * horizontalInput * Time.deltaTime);
-        transform.position = playerPosition;
+        PlayerHoeeizontalMovement(horizontalInput);
+        PlayerJumpMovement(verticalInput, jumpInput);
+    }
+
+    private void PlayerJumpMovement(float verticalInput, bool jumpInput)
+    {
         if (((verticalInput > 0) || (jumpInput)) && onGround)
         {/*
             playerRigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);*/
 
             playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
         }
+    }
+
+    private void PlayerHoeeizontalMovement(float horizontalInput)
+    {
+        if (horizontalInput == 0)
+            return;
+        Vector3 playerPosition = transform.position;
+        playerPosition.x += (speed * horizontalInput * Time.deltaTime);
+        transform.position = playerPosition;
+        if(AudioManager.Instance!=null)
+        if (!AudioManager.Instance.audioSfx.isPlaying && onGround)
+            AudioManager.Instance.PlaySfxMusic(SoundType.PlayerMovement);
     }
 
     private void PlayerAnimation(float horizontalInput, float verticalInput, bool jumpInput)

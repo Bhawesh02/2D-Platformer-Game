@@ -34,18 +34,21 @@ public class LevelComplete : MonoBehaviour
 
     private void GoLobby()
     {
-        Debug.Log("Going Lobby");
+        AudioManager.Instance.PlaySfxMusic(SoundType.ButtonClick);
+
         SceneManager.LoadScene(Levels.GetSceneName(0));
     }
 
     private void RestartLevel()
     {
+        AudioManager.Instance.PlaySfxMusic(SoundType.ButtonClick);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void NextLevel()
     {
+        AudioManager.Instance.PlaySfxMusic(SoundType.ButtonClick);
         int currentLevelIndex = Array.IndexOf(Levels.levels, currentLevelName);
         int nextLevelIndex = currentLevelIndex + 1;
         if (nextLevelIndex < Levels.levels.Length)

@@ -22,11 +22,14 @@ public class LevelSelection : MonoBehaviour
 
     private void SelectLevel()
     {
+        AudioManager.Instance.PlaySfxMusic(SoundType.ButtonClick);
+
         levelSelect.SetActive(true);
     }
 
     private void ContinueLevel()
     {
+        AudioManager.Instance.PlaySfxMusic(SoundType.ButtonClick);
         string sceneName = PlayerPrefs.GetString("Reached Level", Levels.levels[1]);
 
 
