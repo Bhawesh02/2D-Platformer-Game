@@ -45,6 +45,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.GetComponent<PlayerControler>() != null)
         {
             collision.gameObject.GetComponent<PlayerControler>().DecreaseHealth();
+            AudioManager.Instance.PlaySfxMusic(SoundType.EnemyDeath);
             Destroy(gameObject);
         }
     }
